@@ -5,6 +5,7 @@ This project simulates EV charging scenarios for a fleet of vehicles.
 ## Day 1 Scope
 - Generate synthetic EV charging profiles
 - Prepare for uncontrolled charging simulation
+![Arrival Hour Distribution](results/figures/arrival_hour_histogram.png)
 
 ## Next Steps
 - Implement uncontrolled charging
