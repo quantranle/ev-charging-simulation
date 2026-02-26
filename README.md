@@ -74,3 +74,27 @@ Metrics:
 ---
 
 ## Project structure
+ev-charging-simulation/
+├─ src/
+│ ├─ profile_generator.py # synthetic EV profile generation + validation
+│ ├─ charging_simulator.py # charging simulation logic (uncontrolled)
+│ └─ metrics.py # fleet-level metrics
+├─ results/
+│ ├─ ev_profiles_day1.csv
+│ ├─ fleet_load_uncontrolled.csv
+│ ├─ ev_results_uncontrolled.csv
+│ └─ figures/
+│ ├─ arrival_hour_histogram.png
+│ ├─ energy_needed_histogram.png
+│ └─ aggregate_load_uncontrolled.png
+├─ requirements.txt
+└─ run.py # main entry point
+
+---
+
+## How to run (Windows)
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python run.py
