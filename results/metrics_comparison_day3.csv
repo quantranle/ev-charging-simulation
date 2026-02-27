@@ -1,0 +1,3 @@
+scenario,peak_load_kw,total_energy_delivered_kwh,total_energy_needed_kwh,completion_rate_pct,n_incomplete,avg_shortfall_kwh_incomplete,p95_shortfall_kwh_incomplete
+uncontrolled,82.67,1073.94,1330.32,68.0,16,16.024,37.2
+smart_rule_based,74.64,1073.94,1330.32,68.0,16,16.024,37.2
