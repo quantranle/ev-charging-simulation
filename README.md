@@ -124,7 +124,7 @@ python run.py
 ```
 
 ### 4. Outputs
-Outputs are saved under results/ and figures under results/figures/.
+Outputs are saved under `results/` and figures under `results/figures/`.
 
 ---
 
