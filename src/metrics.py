@@ -4,6 +4,7 @@ import pandas as pd
 def calculate_fleet_metrics(
     fleet_load_df: pd.DataFrame,
     ev_results_df: pd.DataFrame,
+    total_cost_eur: float = None,
 ) -> dict:
     peak_load_kw = float(fleet_load_df["fleet_load_kw"].max())
     total_energy_delivered_kwh = float(ev_results_df["energy_delivered_kwh"].sum())
@@ -15,7 +16,7 @@ def calculate_fleet_metrics(
     p95_shortfall = float(shortfalls.quantile(0.95)) if len(shortfalls) else 0.0
     n_incomplete = int((~ev_results_df["completed"]).sum())
 
-    return {
+    metrics = {
         "peak_load_kw": round(peak_load_kw, 3),
         "total_energy_delivered_kwh": round(total_energy_delivered_kwh, 3),
         "total_energy_needed_kwh": round(total_energy_needed_kwh, 3),
@@ -24,3 +25,8 @@ def calculate_fleet_metrics(
         "avg_shortfall_kwh_incomplete": round(avg_shortfall, 3),
         "p95_shortfall_kwh_incomplete": round(p95_shortfall, 3),
     }
+
+    if total_cost_eur is not None:
+        metrics["total_cost_eur"] = round(float(total_cost_eur), 2)
+
+    return metrics
