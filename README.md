@@ -3,8 +3,9 @@
 Learn and practice EV charging simulation for a fleet of vehicles using hourly time steps.
 Current scope covers:
 - Synthetic EV profile generation (Day 1)
-- **Uncontrolled charging simulation** + fleet load aggregation (Day 2)
-- **Rule-based smart charging (peak avoidance) + feasibility root-cause analysis (Day 3)**
+- Uncontrolled charging simulation + fleet load aggregation (Day 2)
+- Rule-based smart charging (peak avoidance) + feasibility root-cause analysis (Day 3)
+- **Time-of-use tariff and charging cost comparison (Day 4)**
 
 ---
 
@@ -48,6 +49,24 @@ Outputs:
 - `results/ev_results_smart_rule_based.csv`
 - `results/figures/fleet_load_comparison_uncontrolled_vs_smart.png`
 
+### Day 4 — Time-of-use tariff and charging cost comparison
+Adds a simple **time-of-use tariff model** and calculates total charging cost per scenario.
+
+Tariff structure:
+- **Off-peak:** 0.20 EUR/kWh (hours 0–6)
+- **Shoulder:** 0.30 EUR/kWh (hours 7–15, 21–23)
+- **Peak:** 0.45 EUR/kWh (hours 16–20)
+
+New functionality:
+- Calculates total fleet charging cost from hourly load profile
+- Compares uncontrolled vs smart charging under the same tariff
+- Visualizes fleet load against tariff profile
+
+Outputs:
+- `results/tariff_schedule.csv`
+- `results/metrics_comparison_day4.csv`
+- `results/figures/fleet_load_and_tariff_comparison.png`
+
 ---
 
 ## Results (current run)
@@ -67,16 +86,19 @@ Configuration:
 - Incomplete EVs: **16**
 - Avg shortfall (incomplete only): **16.024 kWh**
 - P95 shortfall (incomplete only): **37.2 kWh**
+- Total cost: **339.68 EUR**
 
 ### Smart (rule-based peak avoidance)
 - Peak load: **74.64 kW** (**~9.7% reduction** vs uncontrolled)
 - Total energy delivered: **1073.94 kWh** (unchanged)
 - Completion rate: **68%** (unchanged)
-- Incomplete EVs: **16** (unchanged)
+- Incomplete EVs: **16** (unchanged)- Total cost: **336.07 EUR**
+- Cost saving: **3.61 EUR** (**~1.06% reduction** vs uncontrolled)
 
 ### Root-cause insight (uncontrolled)
 - **Not completed but feasible:** **0**
 - Interpretation: all incomplete EVs are **infeasible** given fixed charging power and limited available hours, not due to simulation logic.
+- This means current service limitations come from **physical/time constraints**, not from simulation or scheduling errors.
 
 ---
 
@@ -94,6 +116,9 @@ Configuration:
 ### Fleet load comparison (uncontrolled vs smart)
 ![Fleet Load Comparison](results/figures/fleet_load_comparison_uncontrolled_vs_smart.png)
 
+### Fleet load and tariff comparison
+![Fleet Load and Tariff Comparison](results/figures/fleet_load_and_tariff_comparison.png)
+
 ---
 
 ## Assumptions
@@ -101,7 +126,9 @@ Configuration:
 - `departure_hour` is **not inclusive**
   - Example: arrival=10, departure=13 → charging can occur at hours 10, 11, 12
 - Constant charging power (no CC–CV tapering yet)
-- No grid constraints, tariffs, or V2G/V2H (planned)
+- No grid import limit, transformer constraint, or feeder capacity limit
+- No V2H/V2G yet
+- Smart charging is currently **rule-based**, not optimization-based
 
 ---
 
